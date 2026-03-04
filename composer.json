@@ -1,0 +1,63 @@
+{
+    "name": "cline/idempotency",
+    "description": "Generate reproducible idempotency keys from any data format (JSON, XML, YAML, arrays, objects) regardless of key order",
+    "license": "MIT",
+    "keywords": [
+        "php",
+        "idempotency",
+        "hash",
+        "key-generation",
+        "data-normalization"
+    ],
+    "authors": [
+        {
+            "name": "Brian Faust",
+            "email": "brian@cline.sh"
+        }
+    ],
+    "require": {
+        "php": "^8.5.0",
+        "saloonphp/xml-wrangler": "^1.4.1",
+        "symfony/yaml": "^7.4.6"
+    },
+    "require-dev": {
+        "cline/coding-standard": "^1.7.0",
+        "orchestra/testbench": "^10.9",
+        "symfony/var-dumper": "^7.4.6"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Cline\\Idempotency\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "ergebnis/composer-normalize": true,
+            "pestphp/pest-plugin": true
+        }
+    },
+    "scripts": {
+        "lint": "vendor/bin/ecs check --fix",
+        "refactor": "rector",
+        "test": [
+            "@test:lint",
+            "@test:type-coverage",
+            "@test:unit",
+            "@test:types",
+            "@test:refactor"
+        ],
+        "test:lint": "vendor/bin/ecs check",
+        "test:refactor": "rector --dry-run",
+        "test:type-coverage": "pest --parallel --min=80 --type-coverage",
+        "test:types": "phpstan",
+        "test:unit": "pest --parallel --min=80 --coverage"
+    }
+}
