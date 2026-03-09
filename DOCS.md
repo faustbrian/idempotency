@@ -1,11 +1,13 @@
 ## Table of Contents
 
-1. Basic Usage (`docs/basic-usage.md`)
-2. Supported Formats (`docs/supported-formats.md`)
-3. Hash Algorithms (`docs/hash-algorithms.md`)
-4. Output Formats (`docs/output-formats.md`)
-5. Custom Normalizers (`docs/custom-normalizers.md`)
-6. Advanced Examples (`docs/advanced-examples.md`)
+1. [Basic Usage](#doc-docs-basic-usage) (`docs/basic-usage.md`)
+2. [Supported Formats](#doc-docs-supported-formats) (`docs/supported-formats.md`)
+3. [Hash Algorithms](#doc-docs-hash-algorithms) (`docs/hash-algorithms.md`)
+4. [Output Formats](#doc-docs-output-formats) (`docs/output-formats.md`)
+5. [Custom Normalizers](#doc-docs-custom-normalizers) (`docs/custom-normalizers.md`)
+6. [Advanced Examples](#doc-docs-advanced-examples) (`docs/advanced-examples.md`)
+<a id="doc-docs-basic-usage"></a>
+
 The `IdempotencyKey` class generates consistent cryptographic hashes from any data structure, automatically normalizing inputs so that identical data produces identical keys regardless of key order.
 
 ## Quick Start
@@ -82,7 +84,7 @@ $key = IdempotencyKey::create('test');
 strlen($key->toString()); // 64
 ```
 
-See [Hash Algorithms](./hash-algorithms.md) for other options.
+See [Hash Algorithms](#doc-docs-hash-algorithms) for other options.
 
 ## String Casting
 
@@ -125,6 +127,8 @@ $short = $key->truncate(16); // First 16 characters
 ```
 
 **Warning**: Shorter lengths significantly increase collision probability. Use full-length keys for production.
+
+<a id="doc-docs-supported-formats"></a>
 
 The `IdempotencyKey` class automatically detects and normalizes various data formats. All formats are converted to a canonical representation before hashing.
 
@@ -342,6 +346,8 @@ IdempotencyKey::create(['value' => 42])->equals(
     IdempotencyKey::create(['value' => '42'])
 ); // false - int vs string
 ```
+
+<a id="doc-docs-hash-algorithms"></a>
 
 The library supports multiple cryptographic hash algorithms, each with different security and performance characteristics.
 
@@ -570,6 +576,8 @@ $key1 = IdempotencyKey::create($data, HashAlgorithm::SHA256);
 $key2 = IdempotencyKey::create($data, HashAlgorithm::SHA512);
 $key1->equals($key2); // false - different algorithms
 ```
+
+<a id="doc-docs-output-formats"></a>
 
 Idempotency keys can be converted to various output formats for different use cases. Each format offers different characteristics in terms of length, readability, and compatibility.
 
@@ -919,6 +927,8 @@ Storage::put($filename, $data);
 $filename = "{$key->toString()}.json";
 Storage::put($filename, $data);
 ```
+
+<a id="doc-docs-custom-normalizers"></a>
 
 Custom normalizers allow you to preprocess data before the standard normalization pipeline. This is useful for domain-specific transformations, filtering sensitive data, or normalizing complex business objects.
 
@@ -1296,6 +1306,8 @@ $normalizer
     ->add(new WhitespaceNormalizer())
     ->add(new SensitiveFieldFilter());
 ```
+
+<a id="doc-docs-advanced-examples"></a>
 
 Real-world usage patterns and advanced techniques for the idempotency library.
 

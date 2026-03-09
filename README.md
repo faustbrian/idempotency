@@ -36,12 +36,12 @@ $key1->equals($key2); // true
 
 ## Documentation
 
-- **[Basic Usage](cookbook/basic-usage.md)** - Getting started with idempotency keys
-- **[Supported Formats](cookbook/supported-formats.md)** - JSON, XML, YAML, arrays, objects, and scalars
-- **[Hash Algorithms](cookbook/hash-algorithms.md)** - SHA-256, SHA-512, SHA-1, and MD5
-- **[Output Formats](cookbook/output-formats.md)** - Hex, binary, Base64, Base62, UUID, and versioned strings
-- **[Custom Normalizers](cookbook/custom-normalizers.md)** - Preprocessing data with custom normalizers
-- **[Advanced Examples](cookbook/advanced-examples.md)** - Real-world usage patterns and techniques
+- **[Basic Usage](DOCS.md#doc-docs-basic-usage)** - Getting started with idempotency keys
+- **[Supported Formats](DOCS.md#doc-docs-supported-formats)** - JSON, XML, YAML, arrays, objects, and scalars
+- **[Hash Algorithms](DOCS.md#doc-docs-hash-algorithms)** - SHA-256, SHA-512, SHA-1, and MD5
+- **[Output Formats](DOCS.md#doc-docs-output-formats)** - Hex, binary, Base64, Base62, UUID, and versioned strings
+- **[Custom Normalizers](DOCS.md#doc-docs-custom-normalizers)** - Preprocessing data with custom normalizers
+- **[Advanced Examples](DOCS.md#doc-docs-advanced-examples)** - Real-world usage patterns and techniques
 
 ## Change log
 
