@@ -1,11 +1,11 @@
 ## Table of Contents
 
-1. [Basic Usage](#doc-docs-basic-usage) (`docs/basic-usage.md`)
-2. [Supported Formats](#doc-docs-supported-formats) (`docs/supported-formats.md`)
-3. [Hash Algorithms](#doc-docs-hash-algorithms) (`docs/hash-algorithms.md`)
-4. [Output Formats](#doc-docs-output-formats) (`docs/output-formats.md`)
-5. [Custom Normalizers](#doc-docs-custom-normalizers) (`docs/custom-normalizers.md`)
-6. [Advanced Examples](#doc-docs-advanced-examples) (`docs/advanced-examples.md`)
+1. [Basic Usage](#doc-docs-basic-usage)
+2. [Supported Formats](#doc-docs-supported-formats)
+3. [Hash Algorithms](#doc-docs-hash-algorithms)
+4. [Output Formats](#doc-docs-output-formats)
+5. [Custom Normalizers](#doc-docs-custom-normalizers)
+6. [Advanced Examples](#doc-docs-advanced-examples)
 <a id="doc-docs-basic-usage"></a>
 
 The `IdempotencyKey` class generates consistent cryptographic hashes from any data structure, automatically normalizing inputs so that identical data produces identical keys regardless of key order.
