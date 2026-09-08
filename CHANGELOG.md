@@ -10,3 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added repository-level maintainer guidance in `AGENTS.md`.
 - Initial release
+
+## [2.0.3] - 2026-09-08
+
+### Changed
+- Replaced XML Wrangler with VeeWee XML 4 to support Webmozart Assert 2.
