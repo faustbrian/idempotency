@@ -10,17 +10,18 @@
 namespace Cline\Idempotency\Actions;
 
 use JsonException;
-use Saloon\XmlWrangler\XmlReader;
 use Symfony\Component\Yaml\Yaml;
 use Throwable;
 
 use const JSON_THROW_ON_ERROR;
 
+use function count;
 use function is_array;
 use function json_decode;
 use function mb_trim;
 use function str_contains;
 use function str_starts_with;
+use function VeeWee\Xml\Encoding\xml_decode;
 
 /**
  * Normalizes strings into array representations by parsing structured formats.
@@ -45,7 +46,7 @@ final readonly class StringNormalizer
      *
      * Parsing attempts (in order):
      * 1. JSON: Tries json_decode() for { or [ prefixed strings
-     * 2. XML: Tries XmlReader for < prefixed strings
+     * 2. XML: Tries XML decoding for < prefixed strings
      * 3. YAML: Tries Yaml::parse() for colon-containing multiline strings
      * 4. Plain: Wraps the original string in a value array
      *
@@ -75,9 +76,10 @@ final readonly class StringNormalizer
         // Try XML
         if (str_starts_with($trimmed, '<')) {
             try {
-                $reader = XmlReader::fromString($trimmed);
+                $decoded = xml_decode($trimmed);
 
-                return $reader->values();
+                /** @var array<string, mixed> $decoded */
+                return $this->normalizeXml($decoded);
             } catch (Throwable) {
                 // Not XML, continue
             }
@@ -99,5 +101,37 @@ final readonly class StringNormalizer
 
         // Plain string
         return ['value' => $string];
+    }
+
+    /**
+     * @param  array<string, mixed> $decoded
+     * @return array<string, mixed>
+     */
+    private function normalizeXml(array $decoded): array
+    {
+        foreach ($decoded as $key => $value) {
+            $decoded[$key] = $this->normalizeXmlValue($value);
+        }
+
+        return $decoded;
+    }
+
+    private function normalizeXmlValue(mixed $value): mixed
+    {
+        if (!is_array($value)) {
+            return $value;
+        }
+
+        unset($value['@attributes'], $value['@namespaces']);
+
+        if (count($value) === 1 && isset($value['@value'])) {
+            return $value['@value'];
+        }
+
+        foreach ($value as $key => $nestedValue) {
+            $value[$key] = $this->normalizeXmlValue($nestedValue);
+        }
+
+        return $value;
     }
 }

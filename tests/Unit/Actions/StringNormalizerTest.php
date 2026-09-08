@@ -174,8 +174,7 @@ test('normalizes simple XML to array', function (): void {
     $result = $normalizer->normalize($xml);
 
     // Assert
-    expect($result)->toBeArray()
-        ->toHaveKey('user');
+    expect($result)->toBe(['user' => '']);
 })->group('happy-path', 'xml');
 
 test('normalizes nested XML elements', function (): void {
@@ -187,7 +186,14 @@ test('normalizes nested XML elements', function (): void {
     $result = $normalizer->normalize($xml);
 
     // Assert
-    expect($result)->toBeArray();
+    expect($result)->toBe([
+        'root' => [
+            'user' => [
+                'name' => 'John',
+                'age' => '30',
+            ],
+        ],
+    ]);
 })->group('happy-path', 'xml');
 
 test('normalizes XML with attributes and content', function (): void {
@@ -199,7 +205,12 @@ test('normalizes XML with attributes and content', function (): void {
     $result = $normalizer->normalize($xml);
 
     // Assert
-    expect($result)->toBeArray();
+    expect($result)->toBe([
+        'item' => [
+            'name' => 'Laptop',
+            'price' => '999.99',
+        ],
+    ]);
 })->group('happy-path', 'xml');
 
 test('normalizes XML with CDATA sections', function (): void {
@@ -211,7 +222,9 @@ test('normalizes XML with CDATA sections', function (): void {
     $result = $normalizer->normalize($xml);
 
     // Assert
-    expect($result)->toBeArray();
+    expect($result)->toBe([
+        'content' => '<p>HTML content</p>',
+    ]);
 })->group('happy-path', 'xml');
 
 test('normalizes XML with namespaces', function (): void {
@@ -223,7 +236,27 @@ test('normalizes XML with namespaces', function (): void {
     $result = $normalizer->normalize($xml);
 
     // Assert
-    expect($result)->toBeArray();
+    expect($result)->toBe([
+        'root' => [
+            'foo:item' => 'value',
+        ],
+    ]);
+})->group('happy-path', 'xml');
+
+test('normalizes repeated XML elements to an indexed array', function (): void {
+    // Arrange
+    $normalizer = new StringNormalizer();
+    $xml = '<root><item>first</item><item>second</item></root>';
+
+    // Act
+    $result = $normalizer->normalize($xml);
+
+    // Assert
+    expect($result)->toBe([
+        'root' => [
+            'item' => ['first', 'second'],
+        ],
+    ]);
 })->group('happy-path', 'xml');
 
 /*
